@@ -3,7 +3,6 @@
 import * as React from "react";
 import type { ZodError } from "zod";
 import { Send } from "lucide-react";
-import { moodFormSchema } from "@/lib/validators";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ExamSelect } from "@/components/mood/ExamSelect";
@@ -22,13 +21,15 @@ type FieldErrors = Partial<Record<keyof MoodFormValues, string>>;
 
 const initialExamType: ExamType = "NEET";
 
+const firstError = (errors: string[] | undefined): string | undefined => errors?.[0];
+
 const getFieldErrors = (error: ZodError): FieldErrors => {
   const flattened = error.flatten().fieldErrors;
   const nextErrors: FieldErrors = {};
-  const moodError = flattened.moodScore?.at(0);
-  const examError = flattened.examType?.at(0);
-  const triggerError = flattened.triggers?.at(0);
-  const noteError = flattened.reflectionNote?.at(0);
+  const moodError = firstError(flattened.moodScore);
+  const examError = firstError(flattened.examType);
+  const triggerError = firstError(flattened.triggers);
+  const noteError = firstError(flattened.reflectionNote);
 
   if (moodError) nextErrors.moodScore = moodError;
   if (examError) nextErrors.examType = examError;
@@ -66,6 +67,7 @@ export const MoodCheckIn = ({
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       if (isSubmitting) return;
+      const { moodFormSchema } = await import("@/lib/validators");
       const parsed = moodFormSchema.safeParse({
         moodScore,
         examType,

@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "NODE_OPTIONS=--no-warnings next build",
     "start": "next start",
+    "start:local": "next start -H 127.0.0.1 -p 3000",
+    "start:audit": "next start -H 127.0.0.1 -p 3001",
     "lint": "eslint . --max-warnings=0",
     "test": "jest",
     "test:coverage": "jest --coverage",

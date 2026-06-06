@@ -40,7 +40,7 @@ export const createMemoryStorage = (): MemoryStorage => {
     },
     clear: () => store.clear(),
     getItem: (key: string) => store.get(key) ?? null,
-    key: (index: number) => Array.from(store.keys()).at(index) ?? null,
+    key: (index: number) => Array.from(store.keys())[index] ?? null,
     removeItem: (key: string) => store.delete(key),
     setItem: (key: string, value: string) => {
       store.set(key, value);

@@ -56,10 +56,22 @@ npm run typecheck
 npm run lint
 npm test -- --coverage
 npm run build
+npm run start:audit
 npm audit
 ```
 
 Coverage thresholds are enforced globally in `jest.config.ts`: 90% statements, 85% branches, 90% functions, 90% lines.
+
+## Lighthouse Audits
+
+Run Lighthouse against a production server, not `npm run dev`. Development bundles include React refresh, source maps, cache-busting `?v=` chunks, and dev-only transforms that Lighthouse can report as legacy JavaScript even though they are not the production user experience.
+
+```bash
+npm run build
+npm run start:audit
+```
+
+Then audit `http://127.0.0.1:3001`. The global `layout.css` file is the critical Tailwind stylesheet; it is expected to appear as render-blocking because it prevents a flash of unstyled content, and the production file is kept small by Tailwind content pruning.
 
 ## Deployment
 

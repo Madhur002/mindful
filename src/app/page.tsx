@@ -8,7 +8,6 @@ import { useWellnessAI } from "@/hooks/useWellnessAI";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { Badge } from "@/components/ui/badge";
 import { MoodCheckIn } from "@/components/mood/MoodCheckIn";
-import { MoodChart } from "@/components/mood/MoodChart";
 import { WellnessResponse } from "@/components/ai/WellnessResponse";
 import type { AsyncStatus, MoodFormValues, WellnessResponse as WellnessResponseType } from "@/types";
 
@@ -68,9 +67,6 @@ export default function DashboardPage(): JSX.Element {
           />
         </ErrorBoundary>
       </div>
-      <ErrorBoundary fallbackTitle="Mood chart could not load.">
-        <MoodChart entries={entries} />
-      </ErrorBoundary>
     </div>
   );
 }

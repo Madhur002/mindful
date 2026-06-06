@@ -5,7 +5,6 @@ import {
   AI_TIMEOUT_MS,
   getFallbackWellnessResponse
 } from "@/lib/constants";
-import { wellnessApiResultSchema, wellnessRequestSchema } from "@/lib/validators";
 import type {
   AsyncStatus,
   WellnessRequest,
@@ -77,6 +76,9 @@ export const useWellnessAI = (): WellnessAIHook => {
   }, []);
 
   const requestSupport = useCallback(async (request: WellnessRequest) => {
+    const { wellnessApiResultSchema, wellnessRequestSchema } = await import(
+      "@/lib/validators"
+    );
     const parsedRequest = wellnessRequestSchema.parse(request);
     controllerRef.current?.abort();
     const controller = new AbortController();

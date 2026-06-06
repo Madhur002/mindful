@@ -52,8 +52,7 @@ describe("JournalList", () => {
     renderWithApp(<JournalList entries={entries} onDelete={onDelete} />);
 
     const deleteButton = screen
-      .getAllByRole("button", { name: /delete journal entry/i })
-      .at(0);
+      .getAllByRole("button", { name: /delete journal entry/i })[0];
     expect(deleteButton).toBeDefined();
     if (!deleteButton) return;
     await user.click(deleteButton);
