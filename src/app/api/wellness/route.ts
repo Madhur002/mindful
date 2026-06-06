@@ -16,6 +16,8 @@ import type { WellnessRequest, WellnessResponse } from "@/types";
 
 export const runtime = "nodejs";
 
+const DEFAULT_GEMINI_MODEL = "gemini-2.5-flash";
+
 const geminiPartSchema = z.object({ text: z.string().optional() }).passthrough();
 const geminiResponseSchema = z
   .object({
@@ -109,9 +111,10 @@ const callGemini = async (
   if (!apiKey) {
     throw new Error("Gemini API key missing");
   }
+  const model = process.env.GEMINI_MODEL ?? DEFAULT_GEMINI_MODEL;
 
   const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -132,7 +135,10 @@ const callGemini = async (
   );
 
   if (!response.ok) {
-    throw new Error(`Gemini returned ${response.status}`);
+    const errorText = await response.text();
+    throw new Error(
+      `Gemini returned ${response.status} for model ${model}: ${errorText.slice(0, 200)}`
+    );
   }
 
   const payload: unknown = await response.json();

@@ -1,4 +1,4 @@
-import { act, renderHook } from "@testing-library/react";
+import { act, renderHook, waitFor } from "@testing-library/react";
 import { useMoodHistory } from "@/hooks/useMoodHistory";
 import { createMoodDraft } from "@/test/test-utils";
 
@@ -7,8 +7,10 @@ describe("useMoodHistory", () => {
     window.localStorage.clear();
   });
 
-  it("adds, updates, and filters entries", () => {
+  it("adds, updates, and filters entries", async () => {
     const { result } = renderHook(() => useMoodHistory());
+
+    await waitFor(() => expect(result.current.entries).toEqual([]));
 
     act(() => {
       result.current.upsertToday(createMoodDraft(), "2026-06-01");

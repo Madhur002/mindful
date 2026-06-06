@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   deleteMoodEntry,
   filterMoodEntries,
@@ -22,12 +22,16 @@ type MoodHistoryApi = {
 };
 
 export const useMoodHistory = (): MoodHistoryApi => {
-  const [entries, setEntries] = useState<MoodEntry[]>(() => loadMoodEntries());
+  const [entries, setEntries] = useState<MoodEntry[]>([]);
   const todayKey = toDateKey();
 
   const refresh = useCallback(() => {
     setEntries(loadMoodEntries());
   }, []);
+
+  useEffect(() => {
+    refresh();
+  }, [refresh]);
 
   const upsertToday = useCallback(
     (draft: MoodEntryDraft, dateKey = toDateKey()) => {

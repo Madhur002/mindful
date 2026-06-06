@@ -21,6 +21,7 @@ Open `http://localhost:3000`.
 | Variable | Required | Description |
 |---|---:|---|
 | `GEMINI_API_KEY` | Yes for live AI | Google Gemini API key. Read only by `src/app/api/wellness/route.ts`; never sent to the client. |
+| `GEMINI_MODEL` | No | Gemini model for `generateContent`; defaults to `gemini-2.5-flash`. |
 
 If the key is absent or Gemini fails, the API returns a validated static fallback response.
 

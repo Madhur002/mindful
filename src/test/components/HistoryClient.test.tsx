@@ -20,11 +20,11 @@ describe("HistoryClient", () => {
     window.localStorage.clear();
   });
 
-  it("renders trends, calendar, journal, and streak", () => {
+  it("renders trends, calendar, journal, and streak", async () => {
     renderWithApp(<HistoryClient />);
 
     expect(screen.getByText("History and trends")).toBeInTheDocument();
-    expect(screen.getByText("Mood calendar")).toBeInTheDocument();
-    expect(screen.getByText("Emotion journal")).toBeInTheDocument();
+    expect(await screen.findByText("Mood calendar")).toBeInTheDocument();
+    expect(await screen.findByText("Emotion journal")).toBeInTheDocument();
   });
 });

@@ -42,6 +42,7 @@ describe("/api/wellness", () => {
   afterEach(() => {
     jest.restoreAllMocks();
     delete process.env.GEMINI_API_KEY;
+    delete process.env.GEMINI_MODEL;
   });
 
   it("returns validated Gemini output for valid input", async () => {
@@ -62,6 +63,31 @@ describe("/api/wellness", () => {
     expect(response.status).toBe(200);
     expect(payload.fallback).toBe(false);
     expect(payload.response.motivation).toContain("NEET");
+    expect(global.fetch).toHaveBeenCalledWith(
+      expect.stringContaining("/models/gemini-2.5-flash:generateContent"),
+      expect.any(Object)
+    );
+  });
+
+  it("uses the configured Gemini model when provided", async () => {
+    process.env.GEMINI_MODEL = "gemini-2.0-flash";
+    jest.spyOn(global, "fetch").mockResolvedValue(
+      new Response(
+        JSON.stringify({
+          candidates: [
+            { content: { parts: [{ text: JSON.stringify(geminiResponse) }] } }
+          ]
+        }),
+        { status: 200 }
+      )
+    );
+
+    await POST(createRequest(requestBody));
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      expect.stringContaining("/models/gemini-2.0-flash:generateContent"),
+      expect.any(Object)
+    );
   });
 
   it("returns a safe 400 for invalid input", async () => {
