@@ -19,6 +19,20 @@ type AppShellProps = {
 export const AppShell = ({ children }: AppShellProps): JSX.Element => {
   const pathname = usePathname();
 
+  if (pathname === "/" || pathname === "/history" || pathname === "/resources") {
+    return (
+      <div className="min-h-screen bg-background text-foreground">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+        >
+          Skip to main content
+        </a>
+        <main id="main-content">{children}</main>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <a

@@ -36,14 +36,14 @@ export const JournalList = ({ entries, onDelete }: JournalListProps): JSX.Elemen
   );
 
   return (
-    <section aria-labelledby="journal-heading" className="space-y-4">
+    <section aria-labelledby="journal-heading" className="space-y-4 rounded-[28px] border border-white/55 bg-white/34 p-5 backdrop-blur-xl">
       <div>
-        <h2 id="journal-heading" className="text-lg font-semibold">Emotion journal</h2>
-        <p className="text-sm text-muted-foreground">
+        <h2 id="journal-heading" className="text-xl font-bold text-[#2b2426]">Emotion journal</h2>
+        <p className="text-sm leading-6 text-[#665a5d]">
           Search and filter past reflections stored on this device.
         </p>
       </div>
-      <div className="grid gap-3 rounded-lg border bg-card p-4 md:grid-cols-5">
+      <div className="grid gap-3 rounded-[22px] border border-white/55 bg-white/52 p-4 md:grid-cols-5">
         <div className="space-y-1 md:col-span-2">
           <label htmlFor="journal-search" className="text-sm font-semibold">Search</label>
           <Input
@@ -67,7 +67,7 @@ export const JournalList = ({ entries, onDelete }: JournalListProps): JSX.Elemen
             id="journal-exam"
             value={examType}
             onChange={(event) => setExamType(event.target.value as ExamType | "all")}
-            className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
+            className="h-10 w-full rounded-md border border-white/70 bg-white/78 px-3 text-sm"
           >
             <option value="all">All exams</option>
             {EXAM_TYPES.map((exam) => <option key={exam} value={exam}>{exam}</option>)}
@@ -79,7 +79,7 @@ export const JournalList = ({ entries, onDelete }: JournalListProps): JSX.Elemen
             id="journal-trigger"
             value={trigger}
             onChange={(event) => setTrigger(event.target.value as StressTrigger | "all")}
-            className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
+            className="h-10 w-full rounded-md border border-white/70 bg-white/78 px-3 text-sm"
           >
             <option value="all">All triggers</option>
             {STRESS_TRIGGERS.map((item) => <option key={item} value={item}>{item}</option>)}

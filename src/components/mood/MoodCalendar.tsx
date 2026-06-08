@@ -19,8 +19,8 @@ export const MoodCalendar = React.memo(function MoodCalendar({
   );
 
   return (
-    <section className="rounded-lg border bg-card p-4" aria-labelledby="calendar-heading">
-      <h2 id="calendar-heading" className="text-lg font-semibold">Mood calendar</h2>
+    <section className="rounded-[28px] border border-white/55 bg-white/34 p-5 backdrop-blur-xl" aria-labelledby="calendar-heading">
+      <h2 id="calendar-heading" className="text-xl font-bold text-[#2b2426]">Mood calendar</h2>
       <div className="mt-4 grid grid-cols-5 gap-2 sm:grid-cols-10" role="list">
         {days.map((date) => {
           const entry = entriesByDate.get(date);
@@ -37,7 +37,7 @@ export const MoodCalendar = React.memo(function MoodCalendar({
                   : `${formatDisplayDate(date)} no check-in`
               }
               className={cn(
-                "flex aspect-square min-h-10 items-center justify-center rounded-md border text-xs font-semibold",
+                "flex aspect-square min-h-10 items-center justify-center rounded-2xl border text-xs font-bold shadow-sm",
                 moodClass
               )}
               title={formatDisplayDate(date)}
